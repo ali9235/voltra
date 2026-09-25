@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>VOLTRA</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>ar</string>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>voltra_app</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<!-- HealthKit: READ-ONLY.
+	     NSHealthUpdateUsageDescription is deliberately absent because VOLTRA
+	     never writes to Apple Health. Do not add it unless write access is
+	     actually implemented — App Review checks that the requested access
+	     matches what the app does. -->
+	<key>NSHealthShareUsageDescription</key>
+	<string>VOLTRA reads your steps, sleep, heart rate, resting heart rate, workouts, active energy and walking/running distance from Apple Health in order to show your daily VITALS and build your daily plan. The data stays on your iPhone and is sent only to your own paired VOLTRA Desktop. VOLTRA never writes to Apple Health and never shares your health data with third parties. — يقرأ VOLTRA من تطبيق صحة آبل خطواتك ونومك ونبض قلبك ونبض القلب أثناء الراحة وتماريــنك والطاقة النشطة ومسافة المشي والجري، وذلك لعرض مؤشراتك الحيوية اليومية (VITALS) وبناء خطتك اليومية. تبقى البيانات على جهاز iPhone الخاص بك ولا تُرسل إلا إلى جهاز VOLTRA Desktop المقترن بك. لا يكتب VOLTRA أي بيانات في تطبيق الصحة ولا يشارك بياناتك الصحية مع أي طرف آخر.</string>
+	<key>NSHealthRequiredReadAuthorizationTypeIdentifiers</key>
+	<array>
+		<string>HKQuantityTypeIdentifierStepCount</string>
+		<string>HKCategoryTypeIdentifierSleepAnalysis</string>
+		<string>HKQuantityTypeIdentifierHeartRate</string>
+		<string>HKQuantityTypeIdentifierRestingHeartRate</string>
+		<string>HKWorkoutTypeIdentifier</string>
+		<string>HKQuantityTypeIdentifierActiveEnergyBurned</string>
+		<string>HKQuantityTypeIdentifierDistanceWalkingRunning</string>
+	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>UIWindowScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>flutter</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Main</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,182 @@
+# ============================================================================
+# VOLTRA Companion — Codemagic CI (macOS build machine)
+# ============================================================================
+#
+# Why this file exists: HealthKit only runs on a real iPhone, and an iOS app
+# can only be compiled and signed on macOS. This pipeline rents Apple's
+# toolchain from Codemagic so no Mac is needed locally.
+#
+# ---------------------------------------------------------------------------
+# FILL IN BEFORE THE FIRST BUILD  ->  every line marked  # <<< FILL
+# ---------------------------------------------------------------------------
+# Everything else is already configured. Do not change the build steps.
+#
+# 1. In Codemagic: Teams > Integrations > Developer Portal > connect your
+#    App Store Connect API key. Name the integration exactly as you type it
+#    into `app_store_connect:` below.
+# 2. In Codemagic: App settings > Environment variables > create a group
+#    named `voltra_ios` (no variables are required in it yet; the group is
+#    referenced so secrets can be added later without editing this file).
+# ---------------------------------------------------------------------------
+
+definitions:
+  vars: &voltra_vars
+    BUNDLE_ID: "com.voltra.companion"        # keep in sync with ios/Runner.xcodeproj
+    APP_NAME: "VOLTRA Companion"
+
+workflows:
+  # -------------------------------------------------------------------------
+  # 1) ios-testflight — the one he will actually run.
+  #    Builds a signed .ipa and uploads it to TestFlight.
+  # -------------------------------------------------------------------------
+  ios-testflight:
+    name: VOLTRA iOS -> TestFlight
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    environment:
+      vars:
+        <<: *voltra_vars
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+      groups:
+        - voltra_ios
+
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.voltra.companion   # <<< FILL only if you chose a different bundle ID
+
+    integrations:
+      # The name of the App Store Connect API key integration in Codemagic.
+      app_store_connect: VOLTRA_ASC_KEY          # <<< FILL with your integration name
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+
+    scripts:
+      - name: Flutter dependencies
+        script: |
+          flutter --version
+          flutter pub get
+
+      - name: Static analysis
+        script: flutter analyze
+
+      - name: Set build number from Codemagic
+        script: |
+          # TestFlight refuses a build number it has already seen.
+          BUILD_NUMBER=$(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_CONNECT_APP_ID" 2>/dev/null || echo 0) + 1))
+          echo "Using build number $BUILD_NUMBER"
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> $CM_ENV
+
+      - name: Fetch signing files
+        script: |
+          # Creates the App ID if it does not exist and enables the
+          # capabilities declared in ios/Runner/Runner.entitlements
+          # (HealthKit), then downloads the matching provisioning profile.
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+          keychain initialize
+          keychain add-certificates
+          xcode-project use-profiles
+
+      - name: CocoaPods
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+
+      - name: Build signed IPA
+        script: |
+          flutter build ipa --release \
+            --build-number=$BUILD_NUMBER \
+            --export-options-plist=/Users/builder/export_options.plist
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        # Leave beta_groups empty on the first run: internal testers (his own
+        # Apple ID) get the build immediately without Beta App Review.
+        # beta_groups:
+        #   - VOLTRA Internal                    # <<< FILL if you create a group
+      email:
+        recipients:
+          - alishantti85@gmail.com               # <<< FILL if you want a different address
+        notify:
+          success: true
+          failure: true
+
+  # -------------------------------------------------------------------------
+  # 2) ios-compile-check — no Apple account needed.
+  #    Run this FIRST. It proves the iOS code and the HealthKit integration
+  #    compile on macOS before any money is spent on a developer account.
+  # -------------------------------------------------------------------------
+  ios-compile-check:
+    name: VOLTRA iOS compile check (unsigned)
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+
+    environment:
+      vars:
+        <<: *voltra_vars
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Flutter dependencies
+        script: |
+          flutter --version
+          flutter pub get
+
+      - name: Static analysis
+        script: flutter analyze
+
+      - name: CocoaPods
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+
+      - name: Build unsigned iOS app
+        script: |
+          # --no-codesign needs no certificates and no Apple Developer
+          # Program membership. If this step is green, the Dart + Swift +
+          # HealthKit plumbing is correct and only signing remains.
+          flutter build ios --release --no-codesign
+
+    artifacts:
+      - build/ios/iphoneos/*.app
+      - /tmp/xcodebuild_logs/*.log
+
+  # -------------------------------------------------------------------------
+  # 3) web — keeps the Chrome build honest on every push.
+  # -------------------------------------------------------------------------
+  web:
+    name: VOLTRA Web build
+    instance_type: linux_x2
+    max_build_duration: 30
+
+    environment:
+      flutter: stable
+
+    scripts:
+      - name: Flutter dependencies
+        script: flutter pub get
+      - name: Static analysis
+        script: flutter analyze
+      - name: Build web
+        script: flutter build web --release
+
+    artifacts:
+      - build/web/**

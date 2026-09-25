@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- HealthKit capability.
+	     The matching App ID in the Apple Developer portal must also have
+	     HealthKit enabled. Codemagic's `app-store-connect fetch-signing-files
+	     --create` reads this file and enables the capability on the App ID
+	     automatically, so there is normally nothing to do by hand.
+
+	     `health-records` is intentionally NOT included: VOLTRA does not read
+	     clinical records. -->
+	<key>com.apple.developer.healthkit</key>
+	<true/>
+	<key>com.apple.developer.healthkit.access</key>
+	<array/>
+</dict>
+</plist>

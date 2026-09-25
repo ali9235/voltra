@@ -1,0 +1,45 @@
+VOLTRA: context-aware health dashboard for Windows
+
+A Flutter desktop app backed by a local Flask service. Apple Watch data
+reaches it through Health Auto Export over the LAN, is aggregated server-side,
+and is read by the app over loopback. Nothing leaves the machine and there is
+no account.
+
+What is here:
+
+  Context engine        Time of day from the clock, activity state from the
+                        real recorded sleep-end time. Drives the palette and
+                        what each screen shows.
+
+  Morning experience    Wake detection from the recorded sleep_end and nothing
+                        else. One spoken greeting per wake, keyed to the
+                        calendar day the sleep ended so a revised sleep_end
+                        cannot trigger a second one, a previous day's wake is
+                        never greeted, and a greeting missed while the PC was
+                        off arrives at the next launch.
+
+  Voice                 Windows SAPI through PowerShell. SAPI returns instantly
+                        and plays silence for a voice it does not have, so the
+                        voice is chosen only from the list Windows reports and
+                        a speak call that finishes too fast to be audible is
+                        flagged rather than counted as spoken.
+
+  Health pipeline       Typed models where every metric is nullable, an
+                        explicit state machine for idle/loading/ready/partial/
+                        stale/offline/noData/error, and a formatting layer that
+                        renders absence as "No data" with a reason. No zero
+                        ever stands in for a missing measurement.
+
+  Eight modules         Home, Health, Sleep, Training, Schedule, Insights,
+                        Chat, Settings, sharing one shell and one palette.
+
+  Tests                 33 covering the wake rules, the briefing wording, the
+                        voice failure modes and the palettes.
+
+Published with a fresh history. The earlier development history contained a
+3 MB Health Auto Export payload with several thousand real heart-rate, HRV,
+sleep and gait readings, which does not belong in a public repository. That
+history is preserved locally in full and is not part of this repository.
+
+README.md covers the design decisions and how to run it. FEATURES.md is a
+feature-by-feature status map, including what is not built.
