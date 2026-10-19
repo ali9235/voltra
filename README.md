@@ -1,4 +1,10 @@
+<div align="center">
+  <img src="assets/voltra-logo.png"
+       alt="VOLTRA Logo"
+       width="850">
 
+  <h3>ENGINEERED INTELLIGENCE</h3>
+</div>
 <div align="center">
 
 <img src="assets/voltra-hero.svg" alt="VOLTRA — Engineered Intelligence" width="100%" />
