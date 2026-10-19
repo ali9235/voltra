@@ -1,86 +1,49 @@
+# 
+<div align="center">
+
 # VOLTRA
 
-My Apple Watch has been recording my heart rate every few minutes for months. I could not look at any of it without picking up my phone, and I spend most of my day at a desktop.
+### Intelligent Desktop & Device Ecosystem
 
-Every app that solves this wants me to upload the data first. I did not want to do that. Sleep times, resting heart rate and walking patterns are a fairly precise record of where I am and what I am doing all day, and handing that to a company so I can see a chart felt like a bad trade.
+**AI • Windows • Mobile • Embedded Systems**
 
-So VOLTRA keeps all of it on my own machine. My iPhone posts exports to a small Flask server running on my PC over my own Wi-Fi. The desktop app reads from localhost. Nothing goes out, and there is no account to make.
+An experimental intelligent system connecting desktop interaction, mobile control, and embedded hardware.
 
----
-
-## The rule the whole thing is built around
-
-Most health dashboards round missing data down to zero.
-
-If my watch did not record steps this morning, that is not "0 steps". If Health Auto Export has not run since Tuesday, yesterday's numbers are not today's. Those are different facts and showing them the same way is a lie, a small one, but the kind that makes you stop trusting the screen.
-
-So every metric in this codebase is nullable from the JSON parser all the way to the widget. A missing value renders as `No data` with the reason next to it. The morning briefing just drops any sentence it has no measurement for. When the export goes stale the whole app says `STALE` and tells you how old the newest sample is.
-
-It sounds like a small design choice. It is most of the work.
+</div>
 
 ---
 
-## What it does
+## Overview
 
-**It knows when I actually woke up.** Not when the app launched, not when the clock hit seven. It reads the recorded `sleep_end` from my watch data. No sleep record means no wake time, and it says so instead of guessing one.
+VOLTRA is an evolving engineering project exploring connected intelligent interfaces.
 
-**It greets me once, out loud.** "Good morning, Ali. Hope you slept well. What would you like to do today?" Then at most three short sentences about how I slept, my resting heart rate and HRV, and what is on my schedule. Every sentence comes from a number that exists.
+## Project Components
 
-**The greeting cannot fire twice, and it cannot go missing.** This took more thought than the rest of the feature combined, and I explain it below.
+- **ARVEN** — Main assistant interface
+- **CODEX** — Coding and engineering agent
+- **Desktop** — Windows control experience
+- **Mobile** — Remote interface
+- **Control Core** — ESP32-based hardware interface
 
-**Morning Mode.** The app is dark the rest of the day and goes light with a sunrise gradient after a recorded wake. It follows the wake and not the clock, so waking at 13:20 still gets it.
+## Project Status
 
-**Eight modules** behind one sidebar: Home, Health, Sleep, Training, Schedule, Insights, Chat, Settings. They share one shell, one palette, and one health service.
+Under active development. Features may be experimental or incomplete.
 
----
+## Screenshots
 
-## Three decisions I would ask about in an interview
+Add screenshots in the assets folder and link them here.
 
-### Why the greeting is keyed to a day and not a timestamp
+## Roadmap
 
-My first version remembered the exact `sleep_end` instant it had greeted for. That broke within two days.
+- [ ] Improve desktop stability
+- [ ] Refine assistant interactions
+- [ ] Improve secure device connectivity
+- [ ] Document hardware integration
 
-Health Auto Export revises sleep data. A later export can move last night's `sleep_end` by a minute or two as the watch finishes syncing. My app saw a new timestamp, decided it was a new wake, and said good morning at eleven in the morning for a second time.
+## License
 
-Now it records the calendar day the sleep *ended*. A revised `sleep_end` on the same day is still the same morning. There are three rules and I wrote tests for all of them:
-
-- It never fires twice, in one session or across a restart.
-- It never fires for a previous day's wake. If I open the app on Thursday, Wednesday's greeting is gone, not queued.
-- If my PC was off when I woke up, the greeting is delivered at the first launch after that wake, with a note saying how late it is.
-
-That last one is why a simple "greet if it's morning" check does not work. I woke at 06:40 one day and did not open the app until the evening. The old code checked whether I was inside a three hour post-sleep window, found I was not, and silently threw the greeting away.
-
-The delivery record is written to disk before the app speaks, not after. If it crashes mid-sentence I would rather lose the audio than get greeted again.
-
-### Why it speaks English when I mostly write Arabic
-
-There is no Arabic SAPI voice installed on this machine. Only David and Zira, both English.
-
-The problem is what Windows does when you ask for a voice it does not have. It does not raise an error. It returns immediately and plays silence, and every return code says success. I spent an evening convinced my audio was broken.
-
-Two things guard against it now. VOLTRA only picks from the voice list Windows actually reports, and after speaking it compares how long the call took against how long those words should take to say. A call that finishes in 40ms for a twelve second sentence gets flagged as suspect instead of counted as spoken. Either way the status shows in the top bar and in Settings.
-
-I also decided it will not write Arabic in Latin letters to fake it. That is neither language, just noise.
-
-### Why the server aggregates and the app does not
-
-A week of export is around 22,000 raw samples. Sending that to Flutter and reducing it there would work and would also be slow and pointless.
-
-The Flask service does the aggregation and returns one point per day. The app never sees a raw sample array. `/health/summary` gives today plus a seven day baseline, `/health/series?days=N` gives the daily points behind the charts.
-
----
-
-## Running it
-
-You need Flutter with Dart 3 (I built this on Flutter 3.47.5 / Dart 3.13.4) and Python 3.10+ with Flask.
-
-```bash
-git clone https://github.com/<your-username>/voltra.git
-cd voltra
-flutter pub get
-```
-
-On Windows:
+See the repository license file, if provided.
+  
 
 ```bat
 !VOLTRA.bat
