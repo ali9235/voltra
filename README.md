@@ -1,91 +1,159 @@
-# <div align="center">V O L T R A</div>
 
 <div align="center">
 
-**INTELLIGENCE BEYOND THE INTERFACE**
+<img src="assets/voltra-hero.svg" alt="VOLTRA — Engineered Intelligence" width="100%" />
 
-*An experimental intelligent ecosystem for desktop, mobile and embedded systems.*
+<br />
 
-![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=19&duration=3200&pause=1000&color=58A6FF&center=true&vCenter=true&width=600&lines=Engineering+the+Future;Intelligence.+Control.+Connection.;One+Ecosystem.+Infinite+Possibilities.)
+[![Development](https://img.shields.io/badge/STATUS-ACTIVE_DEVELOPMENT-2878D7?style=for-the-badge&labelColor=080F1C)](https://github.com/esd2014-byte/lift)
+![Ecosystem](https://img.shields.io/badge/ECOSYSTEM-DESKTOP_%7C_MOBILE_%7C_HARDWARE-142D50?style=for-the-badge&labelColor=080F1C)
+![Focus](https://img.shields.io/badge/FOCUS-INTELLIGENT_INTERACTION-235B91?style=for-the-badge&labelColor=080F1C)
 
-![Status](https://img.shields.io/badge/STATUS-IN_DEVELOPMENT-147BFF?style=for-the-badge&labelColor=07111F)
-![Platform](https://img.shields.io/badge/PLATFORM-WINDOWS_%7C_MOBILE-0B284B?style=for-the-badge&labelColor=07111F)
-![Hardware](https://img.shields.io/badge/HARDWARE-ESP32-1674B8?style=for-the-badge&labelColor=07111F)
+**An evolving intelligent ecosystem for connected software, interfaces, and hardware.**
+
+[Explore Architecture](#03--system-architecture) · [Meet the Systems](#02--the-ecosystem) · [Roadmap](#06--development-roadmap)
 
 </div>
 
 ---
 
-## ◈ THE VISION
+## 01 / THE VISION
 
-> VOLTRA explores a new way to interact with computers, intelligent assistants, and connected hardware through one unified ecosystem.
+> **Technology should feel connected, responsive, and intentional.**
 
-Built with a focus on **engineering, responsive interaction, modular architecture and secure connectivity**.
+VOLTRA is an independent engineering project exploring a unified experience across Windows, mobile interfaces, intelligent assistants, and embedded control devices.
 
-## ◈ THE ECOSYSTEM
+Its direction combines expressive interaction with modular software and hardware design.
 
-| SYSTEM | PURPOSE |
-|:---|:---|
-| **ARVEN** | Intelligent assistant interface |
-| **CODEX** | Coding and engineering agent |
-| **VOLTRA DESKTOP** | Windows interaction and control |
-| **VOLTRA MOBILE** | Companion mobile interface |
-| **CONTROL CORE** | ESP32-based hardware interface |
+<table>
+<tr>
+<td width="33%" valign="top">
 
-## ◈ CORE CAPABILITIES
+### ◇ INTELLIGENCE
 
-- Intelligent assistant interactions
-- Desktop and mobile interfaces
-- Embedded hardware integration
-- Voice interaction development
-- Context-aware interface concepts
-- Modular system architecture
+Context-aware interaction concepts, assistant workflows, and engineering support.
 
-> Features are experimental and may not yet be fully implemented.
+</td>
+<td width="33%" valign="top">
 
-## ◈ SYSTEM ARCHITECTURE
+### ◇ PRESENCE
 
-```text
-                    VOLTRA
-                       |
-          +------------+------------+
-          |            |            |
-        ARVEN        CODEX       CONTROL
-          |            |            |
-       Desktop      Engineering   ESP32 Core
-          |
-     Mobile Interface
+An interface designed to feel responsive without unnecessary visual noise.
+
+</td>
+<td width="33%" valign="top">
+
+### ◇ CONNECTION
+
+A shared direction for desktop, mobile, and embedded experiences.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 02 / THE ECOSYSTEM
+
+<img src="assets/voltra-systems.svg" alt="VOLTRA ecosystem: ARVEN, CODEX, and CONTROL CORE" width="100%" />
+
+| COMPONENT | ROLE | DIRECTION |
+|:--|:--|:--|
+| **ARVEN** | Primary assistant | Voice, context, presence, and interaction |
+| **CODEX** | Engineering agent | Coding workflows and technical assistance |
+| **VOLTRA DESKTOP** | Windows experience | Local interaction and system controls |
+| **VOLTRA MOBILE** | Companion interface | Connected access and remote interaction |
+| **CONTROL CORE** | Embedded interface | ESP32-based touch control experiments |
+
+> **Development note:** These describe the project's intended ecosystem. Individual features may be prototypes, incomplete, or planned.
+
+---
+
+## 03 / SYSTEM ARCHITECTURE
+
+```mermaid
+flowchart TB
+    V["VOLTRA · Ecosystem"]
+    V --> D["Desktop · Windows"]
+    V --> M["Mobile · Companion"]
+    V --> H["Control Core · ESP32"]
+    D --> A["ARVEN · Assistant"]
+    D --> C["CODEX · Engineering"]
+    M -. "Planned secure connectivity" .-> D
+    H -. "Device integration" .-> D
+    classDef primary fill:#0b2340,stroke:#419cff,color:#f0f6ff,stroke-width:2px;
+    classDef secondary fill:#0b1424,stroke:#37648f,color:#dcecff;
+    class V primary;
+    class D,M,H,A,C secondary;
 ```
 
-## ◈ TECHNOLOGY
+---
 
-![Python](https://img.shields.io/badge/Python-07111F?style=flat-square&logo=python&logoColor=58A6FF)
-![JavaScript](https://img.shields.io/badge/JavaScript-07111F?style=flat-square&logo=javascript&logoColor=58A6FF)
-![HTML5](https://img.shields.io/badge/HTML5-07111F?style=flat-square&logo=html5&logoColor=58A6FF)
-![ESP32](https://img.shields.io/badge/ESP32-07111F?style=flat-square&logo=espressif&logoColor=58A6FF)
-![Windows](https://img.shields.io/badge/Windows-07111F?style=flat-square&logo=windows&logoColor=58A6FF)
+## 04 / ENGINEERING STACK
 
-## ◈ DEVELOPMENT ROADMAP
+<div align="center">
 
-- [ ] Stabilize the desktop application
-- [ ] Refine ARVEN and CODEX interactions
-- [ ] Expand mobile integration
-- [ ] Improve secure remote connectivity
-- [ ] Document Control Core hardware
-- [ ] Publish reproducible installation steps
+![Python](https://img.shields.io/badge/PYTHON-0B1525?style=for-the-badge&logo=python&logoColor=66B5FF)
+![JavaScript](https://img.shields.io/badge/JAVASCRIPT-0B1525?style=for-the-badge&logo=javascript&logoColor=66B5FF)
+![HTML5](https://img.shields.io/badge/HTML5-0B1525?style=for-the-badge&logo=html5&logoColor=66B5FF)
+![ESP32](https://img.shields.io/badge/ESP32-0B1525?style=for-the-badge&logo=espressif&logoColor=66B5FF)
+![Windows](https://img.shields.io/badge/WINDOWS-0B1525?style=for-the-badge&logo=windows&logoColor=66B5FF)
 
-## ◈ PROJECT SHOWCASE
+</div>
 
-*Screenshots, demonstrations and technical documentation coming soon.*
+---
+
+## 05 / PROJECT SHOWCASE
+
+**Visual demonstrations and screenshots will appear here as features are validated.**
+
+<!-- Example after adding a real screenshot:
+<img src="assets/desktop-preview.png" alt="VOLTRA Desktop screenshot" width="100%" />
+-->
+
+---
+
+## 06 / DEVELOPMENT ROADMAP
+
+- [ ] Stabilize desktop startup, window behavior, and side-panel transitions
+- [ ] Refine ARVEN presence, voice interaction, and interruption handling
+- [ ] Integrate CODEX workflows within the main interface
+- [ ] Develop secure desktop-to-mobile connectivity
+- [ ] Expand and document ESP32 Control Core integration
+- [ ] Add reproducible setup instructions, tests, and demos
+
+Progress is tracked through repository commits and issues.
+
+---
+
+## 07 / GETTING STARTED
+
+The project is under active development.
+
+Until a reproducible installer and setup guide are published, inspect the repository structure and documentation before running local components.
+
+**Repository:** [esd2014-byte/lift](https://github.com/esd2014-byte/lift)
+
+---
+
+## 08 / PROJECT PRINCIPLES
+
+**Modular by design.** Components should remain understandable and independently testable.
+
+**Security before remote control.** Connected capabilities should be authenticated, permissioned, and documented.
+
+**Clarity over spectacle.** Motion and visual effects should communicate meaningful system states.
 
 ---
 
 <div align="center">
 
+<img src="assets/voltra-footer.svg" alt="VOLTRA — Designed to Connect. Built to Evolve." width="100%" />
+
 ### V O L T R A
 
 **DESIGNED TO CONNECT. BUILT TO EVOLVE.**
 
-<sub>Independent engineering project • Under active development</sub>
+<sub>INDEPENDENT ENGINEERING PROJECT · EXPERIMENTAL SOFTWARE & HARDWARE</sub>
 
 </div>
