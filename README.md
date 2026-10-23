@@ -163,3 +163,12 @@ Until a reproducible installer and setup guide are published, inspect the reposi
 <sub>INDEPENDENT ENGINEERING PROJECT · EXPERIMENTAL SOFTWARE & HARDWARE</sub>
 
 </div>
+
+
+## ARVEN WEB
+
+[**Open ARVEN Web — Private Preview**](https://arven-web-voltra.jollydrum64.chatgpt.site)
+
+Explore ARVEN through bilingual documentation, an interactive architecture map, and a visual state Lab. This website is separate from VOLTRA's private desktop and device controls.
+
+> **Access:** Owner-private review version. The link currently requires the site owner's signed-in account; it is not a public demo.
